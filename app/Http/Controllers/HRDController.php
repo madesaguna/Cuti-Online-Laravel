@@ -3,21 +3,17 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use DateTime;
-use App\Models\User;
-use App\Models\Jabatan;
 use App\Models\JenisCuti;
-use App\Models\LevelUser;
 use App\Models\Pengajuan;
-use App\Models\StatusKaryawan;
 use Illuminate\Http\Request;
 
 class HRDController extends Controller
 {
-      public function __construct()
+    public function __construct()
     {
         $this->middleware('auth:hrd');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +21,12 @@ class HRDController extends Controller
      */
     public function index()
     {
-      $data_pengajuan = Pengajuan::all();
+        $data_pengajuan = Pengajuan::all();
 
-      return view('hrd.index',['data_pengajuan'=>$data_pengajuan,'auth'=>Auth::User(),'jenis_cuti'=>JenisCuti::all()]);
+        return view('hrd.index', [
+            'data_pengajuan' => $data_pengajuan,
+            'auth' => Auth::User(),
+            'jenis_cuti' => JenisCuti::all()]);
     }
 
     /**
@@ -43,7 +42,7 @@ class HRDController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +53,7 @@ class HRDController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -65,7 +64,7 @@ class HRDController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -76,20 +75,20 @@ class HRDController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $r, $id)
     {
-        Pengajuan::where('id',$id)->update(['status'=>$r->keputusan]);
+        Pengajuan::where('id', $id)->update(['status' => $r->keputusan]);
         return redirect('/hrd');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
